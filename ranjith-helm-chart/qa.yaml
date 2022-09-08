@@ -8,7 +8,7 @@ image:
   repository: 581962848636.dkr.ecr.us-east-2.amazonaws.com/ranjeet-repo
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
+  tag: "1"
 
 imagePullSecrets: []
 nameOverride: ""
