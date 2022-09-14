@@ -1,5 +1,5 @@
 FROM node:latest
-#RUN yum update -y
+#RUN yum update 
 RUN npm install -g express
 RUN npm install -g express-generator
 RUN git clone https://github.com/Ranjeetsheelvant/AatmaaniProject.git
