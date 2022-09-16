@@ -28,5 +28,10 @@ pipeline {
               sh "helm install nodejs-release2 nodejs-helm-chart --values prod.yaml -n production "
           }
       }
-    }
-      }
+    post
+   {
+       always
+       {
+    slackSend channel: 'devops', message: "Build Started: ${env.JOB_NAME} ${env.BUILD_NUMBER} ${currentBuild.currentResult}"
+  }
+}
