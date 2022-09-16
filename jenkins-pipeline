@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+    stages {
+        stage ( "checkout code from SCM" ) {
+        steps {
+          git branch: 'main', credentialsId: 'f4b852ac-bd54-4f36-a6c9-5e78a11f9dd2', url: 'https://github.com/Ranjeetsheelvant/devops-repo.git '
+        }
+        }
+    stage ('Build Docker Image'){
+          steps {
+             sh 'sudo docker build -t ranjith-docker:1 . '
+     }
+      }
+    stage (" push image to ECR "){
+       steps {
+       //   sh "sudo yum update -y"
+         // sh "sudo yum install awscli -y"
+          
+          // sh "aws configure"
+           sh "aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 581962848636.dkr.ecr.us-east-2.amazonaws.com"
+           sh "docker tag ranjith-docker:1 581962848636.dkr.ecr.us-east-2.amazonaws.com/ranjeet-repo:latest"
+           //sh "docker build -t ranjith-docker:1 ."
+            sh "docker push 581962848636.dkr.ecr.us-east-2.amazonaws.com/ranjeet-repo:latest"
+       }
+      }
+    stage (" deploy to dev environment using helm") {
+          steps {
+              sh "helm install nodejs-release2 nodejs-helm-chart --values prod.yaml -n production "
+          }
+      }
+    }
+      }
